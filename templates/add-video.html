@@ -17,7 +17,7 @@
                 <form method="post" action="{% url 'videos:add_video' %}">
                     {% csrf_token %}
                   <div class="form-group">
-                    <input type="text" class="form-control" id="id_title" placeholder="标题" name="title">
+                    <input type="text" class="form-control" id="id_title" placeholder="这里输入标题..." name="title" required>
                   </div>
                   <div class="form-group">
                     <input type="text" class="form-control" id="id_url" hidden name="url">

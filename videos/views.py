@@ -44,7 +44,10 @@ class AddVideoView(View):
     添加视频
     """
     def get(self, request):
-        return render(request, 'add-video.html')
+        current_page = 'add_video'
+        return render(request, 'add-video.html', {
+            'current_page': current_page,
+        })
 
     def post(self, request):
         video_form = VideoForm(data=request.POST)

@@ -32,11 +32,14 @@
 
           <div class="navbar-collapse  offcanvas-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item {% ifequal current_page '' %}active{% endifequal %}">
-                <a class="nav-link " href="{% url 'index' %}">首页</a></li>
-              <li class="nav-item {% ifequal current_page 'book_list' %}active{% endifequal %}" >
-                <a class="nav-link" href="{% url 'videos:add_video' %}">上传</a>
-              </li>
+                <li class="nav-item {% ifequal current_page '' %}active{% endifequal %}">
+                    <a class="nav-link " href="{% url 'index' %}">首页</a></li>
+                 <li class="nav-item {% ifequal current_page 'course_list' %}active{% endifequal %}" >
+                    <a class="nav-link" href="{% url 'courses:course_list' %}">课程</a>
+                </li>
+                <li class="nav-item {% ifequal current_page 'add_video' %}active{% endifequal %}" >
+                    <a class="nav-link" href="{% url 'videos:add_video' %}">上传</a>
+                </li>
 {#              <li class="nav-item {% ifequal current_page 'user_list' %}active{% endifequal %}">#}
 {#                <a class="nav-link " href="{% url 'users:user_list' %}">书友</a>#}
 {#              </li>#}
@@ -68,7 +71,7 @@
 
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2" id="unit" type="search" name="q" placeholder="这里输入关键词..." aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜书</button>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
             </form>
           </div>
       </div>
