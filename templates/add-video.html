@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block custom_css %}
+
+{% endblock %}
+
+
+{% block main %}
+    <div class="container">
+        <div class="my-3 p-3 bg-white rounded box-shadow row">
+            <h4 class="pb-2 mb-3 p-3">
+                添加视频
+            </h4>
+            <div class="col-md-12">
+                <form method="post" action="{% url 'videos:add_video' %}">
+                    {% csrf_token %}
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="id_title" placeholder="标题" name="title">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="id_url" hidden name="url">
+                  </div>
+                    <button type="submit" class="btn btn-primary" id="submit_form" hidden>Submit</button>
+                </form>
+            </div>
+
+            <div class="col-md-12 ">
+                <table class="table" style="display: none">
+                    <thead class="border-0">
+                        <tr>
+                          <th scope="col">FileName</th>
+                          <th scope="col">Size</th>
+                          <th scope="col">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fsUploadProgress"></tbody>
+                </table>
+            </div>
+
+            <div class="col-md-12">
+                <div id="container">
+                    <a class="btn btn-info btn-sm" id="pickfiles" href="#" >
+                        <sapn>选择视频</sapn>
+                    </a>
+                    <a class="btn btn-success btn-sm " id="up_load" style="display: none"  href="#" >
+                        <span>确认上传</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block custom_js %}
+    <script type="text/javascript" src="{% static 'js/plupload/plupload.full.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plupload/i18n/zh_CN.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/qiniu.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
