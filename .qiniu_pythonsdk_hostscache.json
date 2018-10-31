@@ -1,1 +1,1 @@
-{"http:5fCtYuw72dt7UZiL3G1GWROtl-GTVC5bYYDVdhRI:hsonline": {"upHosts": ["http://up-z2.qiniu.com", "http://upload-z2.qiniu.com", "-H up-z2.qiniu.com http://14.152.37.4"], "ioHosts": ["http://iovip-z2.qbox.me"], "deadline": 1540832411}}
+{"http:5fCtYuw72dt7UZiL3G1GWROtl-GTVC5bYYDVdhRI:hsonline": {"upHosts": ["http://up.qiniu.com", "http://upload.qiniu.com", "-H up.qiniu.com http://183.131.7.18"], "ioHosts": ["http://iovip.qbox.me"], "deadline": 1541046822}}

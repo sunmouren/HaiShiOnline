@@ -25,4 +25,6 @@ urlpatterns = [
     path('video/', include('videos.urls', namespace='videos')),
     # course
     path('course/', include('courses.urls', namespace='courses')),
+    # # users
+    # path('user/', include('users.urls', namespace='users')),
 ]

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # my app
     'videos',
     'courses',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,11 @@ STATICFILES_DIRS = [
 
 
 
+# my settings
+AUTH_USER_MODEL = 'users.UserProfile'
+LOGIN_URL = '/user/login/'
+
+
 # 设置上传文件的路径
 
 QINIU_ACCESS_KEY = '5fCtYuw72dt7UZiL3G1GWROtl-GTVC5bYYDVdhRI'
@@ -145,8 +151,7 @@ QINIU_BUCKET_DOMAIN = 'phdewm9yh.bkt.clouddn.com/'
 QINIU_SECURE_URL = False
 PREFIX_URL = 'http://'
 
-MEDIA_ROOT = PREFIX_URL + QINIU_BUCKET_DOMAIN + '/media/'
 
-DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuStorage'
+DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'
 
 
