@@ -2,7 +2,11 @@ import json
 
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
+
+
+from courses.models import Course
 
 
 from qiniu import Auth
@@ -34,19 +38,22 @@ class VideoDetailView(View):
     """
     def get(self, request, vid):
         video = get_object_or_404(Video, id=int(vid))
+
         return render(request, 'video-detail.html', {
             'video': video,
         })
 
 
-class AddVideoView(View):
+class AddVideoView(LoginRequiredMixin, View):
     """
     添加视频
     """
     def get(self, request):
         current_page = 'add_video'
+        courses = Course.objects.filter(user=request.user)
         return render(request, 'add-video.html', {
             'current_page': current_page,
+            'courses': courses,
         })
 
     def post(self, request):

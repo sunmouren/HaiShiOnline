@@ -14,7 +14,7 @@ from .views import VideoDetailView, AddVideoView, uptoken
 app_name = 'videos'
 
 urlpatterns = [
-    path('detail/<int:vid>/', VideoDetailView.as_view(), name='videos_detail'),
+    path('detail/<int:vid>/', VideoDetailView.as_view(), name='video_detail'),
     path('add/', AddVideoView.as_view(), name='add_video'),
     path('uptoken/', uptoken),
 ]

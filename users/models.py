@@ -15,7 +15,7 @@ class UserProfile(AbstractUser):
     following_users = models.ManyToManyField('self', through='FollowUser',
                                              related_name='follower_users',
                                              symmetrical=False)
-    avatar = models.ImageField(upload_to='image/user/avatar',
+    avatar = models.ImageField(upload_to='image/avatar',
                                default='image/default.jpg', verbose_name='头像')
 
     class Meta:
