@@ -38,9 +38,11 @@ class VideoDetailView(View):
     """
     def get(self, request, vid):
         video = get_object_or_404(Video, id=int(vid))
+        comments = video.video_comments.order_by('-like_number')
 
         return render(request, 'video-detail.html', {
             'video': video,
+            'comments': comments,
         })
 
 
@@ -61,6 +63,7 @@ class AddVideoView(LoginRequiredMixin, View):
         if video_form.is_valid():
             try:
                 new_video = video_form.save(commit=False)
+                new_video.user = request.user
                 new_video.save()
                 return render(request, 'add-video.html')
             except BaseException as e:

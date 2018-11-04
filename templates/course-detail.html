@@ -10,7 +10,7 @@
                     <span class="text-white">课程名:</span> <span class="ml-2 text-white">{{ course.name }}</span>
                 </div>
                 <div class="p-1">
-                    <span class="text-white">作者:</span> <span class="ml-2 text-white">{{ course.user }}</span>
+                    <span class="text-white">作者:</span> <a href="{{ course.user.get_absolute_url }}" class="text-white"><span class="ml-2">{{ course.user }}</span></a>
                 </div>
                 <div class="nav-scrolle p-1">
                     <nav class="nav nav-underline" >
@@ -27,11 +27,11 @@
             <h6 class="border-bottom border-gray pb-2 mb-2">课程视频</h6>
             <div class="row">
                 {% for video in videos %}
-                <div class="col-md-4">
+                    <div class="col-md-4">
                     <!-- 桌面排版 -->
                     <div class="card mb-4 border-success box-shadow">
                       <div class="card-body">
-                          <h5 class="card-title"><a class="" href="{{ video.get_absolute_url }}">{{ video.title }}</a></h5>
+                          <h5 class="card-title"><a class="" href="{{ video.get_absolute_url }}">{{ video.name }}</a></h5>
                           <div class="d-flex justify-content-between align-items-center">
 {#                              <small class="text-muted">{{ video.created|date:'Y-m-d' }}</small>#}
                               <small class="text-muted">{{ video.created }}</small>
@@ -39,7 +39,7 @@
                       </div>
                     </div>
                 </div>
-            {% endfor %}
+                {% endfor %}
                 {% for video in fake_videos %}
                 <div class="col-md-4">
                     <!-- 桌面排版 -->
@@ -53,32 +53,8 @@
                       </div>
                     </div>
                 </div>
-            {% endfor %}
+                {% endfor %}
             </div>
-
-            <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
-            </div>
-            <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
-            </div>
-
-            <div class="media text-muted pt-3">
-              <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
-            </div>
-
         </div>
     </div>
 

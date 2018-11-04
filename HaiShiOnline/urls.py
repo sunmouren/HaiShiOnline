@@ -27,4 +27,6 @@ urlpatterns = [
     path('course/', include('courses.urls', namespace='courses')),
     # users
     path('user/', include('users.urls', namespace='users')),
+    # comments
+    path('comment/', include('comments.urls', namespace='comments')),
 ]

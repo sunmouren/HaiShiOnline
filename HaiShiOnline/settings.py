@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'videos',
     'courses',
     'users',
+    'comments',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,11 @@ STATICFILES_DIRS = [
 # my settings
 AUTH_USER_MODEL = 'users.UserProfile'
 LOGIN_URL = '/user/login/'
+
+# 增加邮箱登录
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
 
 
 # 设置上传文件的路径

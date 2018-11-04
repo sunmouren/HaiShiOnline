@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{#{% load user_tags %}#}
+{% load user_tags %}
 
 {% block main %}
     <div class="container">
@@ -12,23 +12,23 @@
               <div class="media-body pb-3 mb-0 small lh-125">
                 <div class="d-flex justify-content-between align-items-center w-100">
                   <strong class="text-white">{{ user }}</strong>
-{#                  {% check_is_following_user request user as is_following %}#}
-{#                  {% ifequal user request.user %}#}
-{#                      <a href="#">#}
-{#                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> 编辑资料#}
-{#                      </a>#}
-{#                  {% else %}#}
-{#                      <a class="{% if is_following %}text-success{% endif %}" id="follow-user-{{ user.id }}" href="javascript:void(0)"#}
-{#                        data-login="{% if not request.user.is_authenticated %}un{% endif %}login"#}
-{#                        data-action="{% if is_following %}un{% endif %}follow"#}
-{#                        onclick="FollowUser({{ user.id }})">#}
-{#                        {% if is_following %}#}
-{#                            <i class="fa fa-check"></i> 已关注#}
-{#                        {% else %}#}
-{#                            <i class="fa fa-plus"></i> 关注#}
-{#                        {% endif %}#}
-{#                      </a>#}
-{#                  {% endifequal %}#}
+                  {% check_is_following request user as is_following %}
+                  {% ifequal user request.user %}
+                      <a href="#" class="text-warning">
+                        <i class="fa fa-address-card-o" aria-hidden="true"></i></i> 编辑资料
+                      </a>
+                  {% else %}
+                      <a class="{% if is_following %}text-white{% else %}text-warning{% endif %}" id="follow-user-{{ user.id }}" href="javascript:void(0)"
+                        data-login="{% if not request.user.is_authenticated %}un{% endif %}login"
+                        data-action="{% if is_following %}un{% endif %}follow"
+                        onclick="FollowUser({{ user.id }})">
+                        {% if is_following %}
+                            <i class="fa fa-check"></i> 已关注
+                        {% else %}
+                            <i class="fa fa-plus"></i> 关注
+                        {% endif %}
+                      </a>
+                  {% endifequal %}
                 </div>
                 <span class="d-block text-white">{{ user.signature }}</span>
               </div>
@@ -37,76 +37,70 @@
 
         <div class="nav-scroller bg-white box-shadow">
             <nav class="nav nav-underline container" >
-               <a class="nav-link {% ifequal 'books' data %}active text-success{% endifequal %}" href="?data=books">课程</a>
-               <a class="nav-link {% ifequal 'comments' data %}active text-success{% endifequal %}" href="?data=comments">评论</a>
-               <a class="nav-link {% ifequal 'followings' data %}active text-success{% endifequal %}" href="?data=followings">关注</a>
-               <a class="nav-link {% ifequal 'followers' data %}active text-success{% endifequal %}" href="?data=followers">粉丝</a>
+               <a class="nav-link {% ifequal 'courses' data %}active text-success{% endifequal %}" href="?data=courses">
+                    <i class="fa fa-book" aria-hidden="true"></i> 课程</a>
+               <a class="nav-link {% ifequal 'videos' data %}active text-success{% endifequal %}" href="?data=videos">
+                   <i class="fa fa-file-video-o" aria-hidden="true"></i> 视频</a>
+               <a class="nav-link {% ifequal 'comments' data %}active text-success{% endifequal %}" href="?data=comments">
+                   <i class="fa fa-comments-o" aria-hidden="true"></i> 评论</a>
+               <a class="nav-link {% ifequal 'followings' data %}active text-success{% endifequal %}" href="?data=followings">
+                   <i class="fa fa-user-plus" aria-hidden="true"></i> 关注</a>
+               <a class="nav-link {% ifequal 'followers' data %}active text-success{% endifequal %}" href="?data=followers">
+                   <i class="fa fa-user-o" aria-hidden="true"></i> 粉丝</a>
             </nav>
         </div>
 
-{#        <!-- user books data-->#}
-{#        {% ifequal 'books' data %}#}
-{#            <div class="my-3 p-3 bg-white rounded box-shadow">#}
-{#                <h6 class="border-bottom border-gray pb-2 mb-3">{{ info }}的课程</h6>#}
-{#                <div class="row mb-2">#}
-{#                {% for book in books %}#}
-{#                    <div class="col-md-4" id="bok-{{ book.id }}">#}
-{#                      <div class="card mb-4 box-shadow">#}
-{#                          <a href="{{ book.get_absolute_url }}">#}
-{#                              <img class="card-img-top img-fluid flex-auto d-none d-md-block img-thumbnail" src="{{ book.cover_picture.url }}" style="height: 225px;" alt="Card image cap">#}
-{#                          </a>#}
-{#                          <div class="card-body">#}
-{#                              <h5 class="card-title"><a href="{{ book.get_absolute_url }}">{{ book.name }}</a></h5>#}
-{#                              <div class="d-flex justify-content-between align-items-center">#}
-{#                                  <div class="btn-group">#}
-{#                                      <a type="button" class="btn btn-sm bg-light text-info"#}
-{#                                              data-toggle="collapse" data-target="#CommentForm{{ book.id }}" aria-expanded="false"#}
-{#                                              aria-controls="CommentForm{{ book.id }}">写书评</a>#}
-{##}
-{##}
-{#                                      {% ifequal request.user user %}#}
-{#                                           <a href="{% url 'books:edit_book' book.id %}" type="button" class="btn btn-sm bg-light text-info">编辑</a>#}
-{#                                           <a type="button" class="btn btn-sm bg-light text-info">删除</a>#}
-{#                                      {% else %}#}
-{#                                          <a type="button" class="btn btn-sm bg-light text-info">下载</a>#}
-{#                                      {% endifequal %}#}
-{#                                  </div>#}
-{#                                <small class="text-muted">{{ book.created|date:'Y-m-d' }}</small>#}
-{#                              </div>#}
-{#                              <div class="collapse" id="CommentForm{{ book.id }}" style="margin-top: 8px">#}
-{#                                     <form>#}
-{#                                        <div class="form-group">#}
-{#                                          <textarea class="form-control" id="message-text-{{ book.id }}"></textarea>#}
-{#                                        </div>#}
-{#                                     </form>#}
-{#                                  <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="collapse" onclick="cancelComment({{ book.id }})">取 消</button>#}
-{#                                  <button type="button" class="btn btn-sm btn-success float-right" onclick="submitComment({{ book.id }}, 0)">发 送</button>#}
-{#                              </div>#}
-{#                          </div>#}
-{#                      </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{##}
-{#                {% for fake_book in fake_books %}#}
-{#                    <div class="col-md-4">#}
-{#                      <div class="card mb-4 box-shadow">#}
-{#                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">#}
-{#                        <div class="card-body">#}
-{#                            <h5 class="card-title"><a href="#">book-name-{{ fake_book }}</a></h5>#}
-{#                            <div class="d-flex justify-content-between align-items-center">#}
-{#                                <div class="btn-group">#}
-{#                                    <button type="button" class="btn btn-sm btn-outline-secondary">写书评</button>#}
-{#                                    <button type="button" class="btn btn-sm btn-outline-secondary">下载</button>#}
-{#                                </div>#}
-{#                                <small class="text-muted">{{ fake_book }} 分钟前</small>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                      </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        </div>#}
-{#        {% endifequal %}#}
+        <!-- user courses data-->
+        {% ifequal 'courses' data %}
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-3">{{ user_flag }}的课程</h6>
+                <div class="row mb-2">
+                {% for object in objects %}
+                    <div class="col-md-4">
+                        <!-- 桌面排版 -->
+                        <div class="card mb-4 border-secondary box-shadow">
+                          <div class="card-body">
+                              <h5 class="card-title"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h5>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <small class="text-muted"><a href="">{{ object.user }}</a></small>
+                                  <small class="text-muted">课时: <span>15</span></small>
+                                  <small class="text-muted">{{ object.created|date:'Y-m-d' }}</small>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% endifequal %}
+
+{#    {% if info %}#}
+{#    {% elif %}#}
+{#    {% endif %}#}
+
+     <!-- user videos data-->
+        {% ifequal 'videos' data %}
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-3">{{ user_flag }}的视频</h6>
+                <div class="row mb-2">
+                {% for object in objects %}
+                    <div class="col-md-4">
+                        <!-- 桌面排版 -->
+                        <div class="card mb-4 border-secondary box-shadow">
+                          <div class="card-body">
+                              <h5 class="card-title"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h5>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <small class="text-muted"><a href="">{{ object.user }}</a></small>
+                                  <small class="text-muted">课时: <span>15</span></small>
+                                  <small class="text-muted">{{ object.created|date:'Y-m-d' }}</small>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% endifequal %}
 {##}
 {#        <!-- user comments data-->#}
 {#        {% ifequal 'comments' data %}#}

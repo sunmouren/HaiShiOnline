@@ -32,57 +32,58 @@ var tips = function ($msg, $type, $icon, $from, $align) {
 };
 
 
-/*  发表在图书详情页面书评 */
-function submitCommentDetail(bid, pid){
+// /*  发表在图书详情页面书评 */
+// function submitCommentDetail(bid, pid){
+//      // 判断是否登录，如果没有就跳转到登录界面
+//     var login = $("#message-text-" + bid).data('login');
+//     if(login == 'unlogin'){
+//         window.location.href = '/user/login/';
+//         return false;
+//     }
+//     var comment_text = $.trim($("#message-text-" + bid).val());
+//
+//     if (comment_text == '') {
+//         tips('评论不能为空！', 'danger');
+//         return false;
+//     }
+//     $.ajax({
+//         cache: false,
+//         type: "POST",
+//         data: {'bid': bid, 'pid': parseInt(pid), 'content': comment_text},
+//         url: "/comment/submit/",
+//         async: true,
+//         //成功返回之后调用的函数
+//         success:function(data){
+//             if (data['msg'] == 'ok') {
+//                 tips('书评提交成功', 'success');
+//                 $("#message-text-" + bid).val("");
+//                 setTimeout(function () {
+//                     location.reload();
+//                     window.location.href= location.href + '#recent';
+//                 }, 2500);
+//                 return true;
+//             } else {
+//                 tips('评论出错啦！Ps: 目前不支持有emoji表情符号！对方或已删除评论！', 'danger');
+//                 return false;
+//             }
+//         },
+//         //调用出错执行的函数
+//         error: function(){
+//             tips('好气啊 提交失败啦 Ps: 目前不支持有emoji表情符号！对方或已删除评论！', 'danger');
+//             return false;
+//         }
+//     });
+// }
+
+function submitComment(vid, pid){
      // 判断是否登录，如果没有就跳转到登录界面
-    var login = $("#message-text-" + bid).data('login');
+    var login = $("#message-text-" + vid).data('login');
     if(login == 'unlogin'){
         window.location.href = '/user/login/';
         return false;
     }
-    var comment_text = $.trim($("#message-text-" + bid).val());
-
-    if (comment_text == '') {
-        tips('评论不能为空！', 'danger');
-        return false;
-    }
-    $.ajax({
-        cache: false,
-        type: "POST",
-        data: {'bid': bid, 'pid': parseInt(pid), 'content': comment_text},
-        url: "/comment/submit/",
-        async: true,
-        //成功返回之后调用的函数
-        success:function(data){
-            if (data['msg'] == 'ok') {
-                tips('书评提交成功', 'success');
-                $("#message-text-" + bid).val("");
-                setTimeout(function () {
-                    location.reload();
-                    window.location.href= location.href + '#recent';
-                }, 2500);
-                return true;
-            } else {
-                tips('评论出错啦！Ps: 目前不支持有emoji表情符号！对方或已删除评论！', 'danger');
-                return false;
-            }
-        },
-        //调用出错执行的函数
-        error: function(){
-            tips('好气啊 提交失败啦 Ps: 目前不支持有emoji表情符号！对方或已删除评论！', 'danger');
-            return false;
-        }
-    });
-}
-
-function submitComment(bid, pid){
-     // 判断是否登录，如果没有就跳转到登录界面
-    var login = $("#message-text-" + bid).data('login');
-    if(login == 'unlogin'){
-        window.location.href = '/user/login/';
-        return false;
-    }
-    var comment_text = $.trim($("#message-text-" + bid).val());
+    var comment_text = $.trim($("#message-text-" + vid).val());
+    var cmt_count = parseInt($('#comment-count').text());
 
     if (comment_text == '') {
         tips('内容不能为空！', 'danger');
@@ -91,14 +92,16 @@ function submitComment(bid, pid){
     $.ajax({
         cache: false,
         type: "POST",
-        data: {'bid': bid, 'pid': parseInt(pid), 'content': comment_text},
+        data: {'vid': vid, 'pid': parseInt(pid), 'content': comment_text},
         url: "/comment/submit/",
         async: true,
         //成功返回之后调用的函数
         success:function(data){
             if (data['msg'] == 'ok') {
                 tips('书评提交成功', 'success');
-                $("#message-text-" + bid).val("");
+                $("#message-text-" + vid).val("");
+                $('#comment-count').text(cmt_count + 1);
+                $('#comment-list').prepend(data['cmt']);
                 return true;
             } else {
                 tips('评论出错啦！Ps: 目前不支持有emoji表情符号！对方或已删除评论！', 'danger');
@@ -114,7 +117,7 @@ function submitComment(bid, pid){
 }
 
 /* 回复 */
-function submitReply(bid, pid){
+function submitReply(vid, pid){
      // 判断是否登录，如果没有就跳转到登录界面
     var login = $("#message-text-" + pid).data('login');
     if(login == 'unlogin'){
@@ -123,6 +126,7 @@ function submitReply(bid, pid){
         return false;
     }
     var comment_text = $.trim($("#message-text-" + pid).val());
+    var cmt_count = parseInt($('#comment-count').text());
 
     if (comment_text == '') {
         tips('评论不能为空！', 'danger');
@@ -131,7 +135,7 @@ function submitReply(bid, pid){
     $.ajax({
         cache: false,
         type: "POST",
-        data: {'bid': bid, 'pid': parseInt(pid), 'content': comment_text},
+        data: {'vid': vid, 'pid': parseInt(pid), 'content': comment_text},
         url: "/comment/submit/",
         async: true,
         //成功返回之后调用的函数
@@ -139,10 +143,8 @@ function submitReply(bid, pid){
             if (data['msg'] == 'ok') {
                 tips('回复书评成功，页面即将刷新~', 'success');
                 $("#message-text-" + pid).val("");
-                setTimeout(function () {
-                    location.reload();
-                    window.location.href= location.href + '#recent';
-                }, 1500);
+                $('#comment-count').text(cmt_count + 1);
+                $('#comment-list').prepend(data['cmt']);
                 return true;
             } else {
                 tips('评论出错啦！Ps: 目前不支持有emoji表情符号！对方或已删除评论！', 'danger');
@@ -159,7 +161,7 @@ function submitReply(bid, pid){
 
 // // 取消书评表单
 // function cancelComment(id) {
-// 	$('#CommentForm' + id).collapse('hide');
+// 	$('#comment-form-0').collapse().hide();
 // }
 
 // 删除评论
@@ -175,6 +177,8 @@ function deleteComment(bid) {
             if (data['msg'] == 'ok') {
                 tips('删除成功~', 'success');
                 $('#comment-'+bid).remove();
+                var count = parseInt($('#comment-count').text());
+                $('#comment-count').text(count - 1);
                 return true;
             }else {
                 tips('好气~ 删除失败!', 'danger');
@@ -218,7 +222,7 @@ function SubmitLike(bid) {
                     $("#like-comment-"+bid).removeClass("text-danger");
                     $("#like-comment-"+bid).addClass("text-info");
 
-                    $("#like-count-"+bid).text(previous_likes - 1)
+                    $("#like-count-"+bid).text(previous_likes - 1);
                     tips('-1', 'success');
                 }
             }

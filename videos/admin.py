@@ -5,9 +5,9 @@ from .models import Video
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'url', 'created']
-    list_filter = ['title', 'created']
-    search_fields = ['title']
+    list_display = ['id', 'name', 'url', 'created']
+    list_filter = ['name', 'created']
+    search_fields = ['name']
 
 
 
